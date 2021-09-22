@@ -8,3 +8,4 @@ class Minusstate extends MYStatus{
   int counter;
   Minusstate(this.counter);
 }
+class Cartlstate extends MYStatus{}

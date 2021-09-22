@@ -6,6 +6,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:tst_2021/module/menu/menu.dart';
 import 'package:tst_2021/module/tap/tap.dart';
 import 'package:tst_2021/module/unit/unit.dart';
+import 'package:tst_2021/shared/network/local/preferences.dart';
 import 'package:tst_2021/shared/todo_bloc/todo_status.dart';
 
 class Todo_cubit extends Cubit<Todo_status>
@@ -21,9 +22,9 @@ class Todo_cubit extends Cubit<Todo_status>
 
 
   Future<String> printer () async =>'hello';
-  void create_db()
-  {
-    openDatabase('todo.db',
+   create_db()
+  async {
+    database =  await openDatabase('todo.db',
         version: 1,
         onCreate: (database,version){
           // id int key
@@ -41,19 +42,17 @@ class Todo_cubit extends Cubit<Todo_status>
 
         });
         }
-    ).then((value) {
-      database = value;
-      emit(Todo_CreatrDatabase_state());
-    });
+    );
+    emit(Todo_CreatrDatabase_state());
 
   }
   
-   Future insert_db({required String title,required String date,required String time})
+    insert_db({required String title,required String date,required String time})
    async {
 
 
-       await database.transaction((txn)  {
-        return   txn.rawInsert(
+       await database.transaction((txn) async  {
+        await   txn.rawInsert(
             'INSERT INTO tasks (title,date,time,status) VALUES ("$title","$date","$time","")');
 
        }).then((value) {
@@ -76,9 +75,15 @@ class Todo_cubit extends Cubit<Todo_status>
 
     return   await database.rawQuery('SELECT * FROM tasks');
   }
-  void delete_db()
-  {
 
+  bool id = false;
+  void switch_dark_light_mode({bool? getid}) {
+    if(getid != null) {id =getid;}
+    else {
+      id = !id;
+      print(id);
+      Preference.put(key: 'id', value: id);
+    }
+    emit(News_Screenmode());
   }
-
 }

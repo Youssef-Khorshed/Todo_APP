@@ -8,7 +8,7 @@ class Count extends StatelessWidget {
 //widget
 //inti state
 // state
-  int number = 1;
+  int number = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +22,12 @@ class Count extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextButton(onPressed: (){ Cubitc.get(context).plus();number++;print(number);}, child: Text('inc',style: TextStyle(fontSize: 30),)),
+                TextButton(onPressed: (){ Cubitc.get(context).plus(number);number++;print(number);}, child: Text('inc',style: TextStyle(fontSize: 30),)),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
                   child: Text('$number',style:TextStyle(fontSize: 30,fontWeight: FontWeight.bold)),
                 ),
-                TextButton(onPressed: (){ Cubitc.get(context).minus();number--;print(number);}, child: Text('dec',style: TextStyle(fontSize: 30)))
+                TextButton(onPressed: (){ Cubitc.get(context).minus(number);number--;print(number);}, child: Text('dec',style: TextStyle(fontSize: 30)))
 
               ],
             ),
